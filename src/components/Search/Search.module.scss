@@ -1,0 +1,48 @@
+.root {
+  position: relative;
+  left: -50px;
+}
+
+.input {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 12px 20px;
+  width: 300px;
+  border-radius: 10px;
+  font-size: 16px;
+  padding-left: 45px;
+
+  &:focus {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+  }
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  opacity: 0.3;
+  position: absolute;
+  left: 12px;
+  top: 12px;
+}
+
+.close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  display: inline-block;
+  background-color: white;
+
+  &__icon {
+    width: 22px;
+    height: 22px;
+    opacity: 0.5;
+  }
+
+  &__icon:hover {
+    opacity: 0.8;
+  }
+}
