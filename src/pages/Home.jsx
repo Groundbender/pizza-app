@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import { Categories } from "../components/Categories/Categories";
 import { PizzaBlock } from "../components/PizzaBlock/PizzaBlock";
 import { Sort } from "../components/Sort/Sort";
@@ -6,7 +7,7 @@ import { Skeleton } from "../components/PizzaBlock/Skeleton";
 import Pagination from "../Pagination/Pagination";
 import { SearchContext } from "../App";
 import { useSelector, useDispatch } from "react-redux";
-import { setCategoryId } from "../redux/filterSlice";
+import { setCurrentPage } from "../redux/filterSlice";
 const Home = () => {
   // https://mockapi.io/projects/649f5ab5245f077f3e9d836d
 
@@ -14,45 +15,32 @@ const Home = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [currentPage, setCurrentPage] = useState(1);
-
+  // const [currentPage, setCurrentPage] = useState(1);
   // const [sortType, setSortType] = useState({
   //   name: "популярности",
   //   sort: "rating",
   // });
 
-  const { categoryId, sort } = useSelector((state) => state.filter);
+  const { categoryId, sort, currentPage } = useSelector(
+    (state) => state.filter
+  );
   const { sortProperty } = sort;
+  const dispatch = useDispatch();
 
   const sortBy = sortProperty.replace("-", "");
   const order = sortProperty.includes("-") ? "asc" : "desc";
   const category = categoryId > 0 ? `&category=${categoryId}` : "";
   const search = searchValue ? `&search=${searchValue}` : "";
 
-  const getData = async () => {
-    try {
-      setIsLoading(true);
-      const res = await fetch(
-        `https://649f5ab5245f077f3e9d836c.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortBy}&order=${order}${category}${search}`
-      );
-      if (!res.ok) {
-        throw new Error("Couldn't fetch");
-      }
-
-      const data = await res.json();
-
-      return data;
-    } catch (error) {
-      console.log(`Something went wrong: ${error}`);
-      return undefined;
-    }
-  };
-
   useEffect(() => {
-    getData().then((arr) => {
-      setItems(arr);
-      setIsLoading(false);
-    });
+    axios
+      .get(
+        `https://649f5ab5245f077f3e9d836c.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortBy}&order=${order}${category}${search}`
+      )
+      .then((res) => {
+        setItems(res.data);
+        setIsLoading(false);
+      });
     window.scrollTo(0, 0);
   }, [categoryId, sortProperty, searchValue, currentPage]);
 
@@ -71,7 +59,10 @@ const Home = () => {
         {isLoading && skeletons}
         {!isLoading && pizzas}
       </div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)} />
+      <Pagination
+        currentPage={currentPage}
+        onChangePage={(number) => dispatch(setCurrentPage(number))}
+      />
     </div>
   );
 };
