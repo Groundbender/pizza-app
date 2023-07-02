@@ -1,0 +1,19 @@
+.root {
+  padding: 100px;
+  width: 750px;
+  margin: 0 auto;
+  text-align: center;
+
+  > span {
+    font-size: 48px;
+  }
+}
+
+.description {
+  font-size: 22px;
+}
+
+.pathname {
+  text-decoration: underline;
+  color: rgb(38, 141, 141);
+}
