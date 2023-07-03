@@ -31,6 +31,14 @@
         color: #fff;
       }
     }
+    .disabled {
+      a {
+        // background-color: #fff;
+        // color: grey;
+        // border-color: grey;
+        visibility: hidden;
+      }
+    }
   }
 }
 
