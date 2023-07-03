@@ -1,40 +1,56 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from "../../redux/filterSlice";
+
+export const filtersData = [
+  {
+    name: "популярности (по убыв)",
+    sortProperty: "rating",
+  },
+  {
+    name: "популярности (по возр)",
+    sortProperty: "-rating",
+  },
+  {
+    name: "цене (по убыв)",
+    sortProperty: "price",
+  },
+  {
+    name: "цене (по возр)",
+    sortProperty: "-price",
+  },
+  {
+    name: "алфавиту (по убыв)",
+    sortProperty: "title",
+  },
+  {
+    name: "алфавиту (по возр)",
+    sortProperty: "-title",
+  },
+];
+
 const Sort = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filter.sort);
+  const sortRef = useRef();
 
-  const filtersData = [
-    {
-      name: "популярности (по убыв)",
-      sortProperty: "rating",
-    },
-    {
-      name: "популярности (по возр)",
-      sortProperty: "-rating",
-    },
-    {
-      name: "цене (по убыв)",
-      sortProperty: "price",
-    },
-    {
-      name: "цене (по возр)",
-      sortProperty: "-price",
-    },
-    {
-      name: "алфавиту (по убыв)",
-      sortProperty: "title",
-    },
-    {
-      name: "алфавиту (по возр)",
-      sortProperty: "-title",
-    },
-  ];
+  const handleClickOutside = (e) => {
+    if (!sortRef.current || !sortRef.current.contains(e.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
