@@ -1,6 +1,3 @@
-import { useState, createContext } from "react";
-
-import { Header } from "./components/Header/Header";
 import { Routes, Route } from "react-router-dom";
 
 import { Home } from "./pages/Home";

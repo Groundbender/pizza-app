@@ -2,10 +2,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-export const SinglePizza = () => {
+interface SinglePizzaData {
+  imageUrl: "string";
+  title: string;
+  price: number;
+}
+
+export const SinglePizza: React.FC = () => {
   const { id } = useParams();
-  const [pizza, setPizza] = useState(null);
+  const [pizza, setPizza] = useState<SinglePizzaData | null>(null);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     (async () => {
       try {
@@ -21,14 +29,13 @@ export const SinglePizza = () => {
   }, [id]);
 
   if (!pizza) {
-    return <p>Загрузка</p>;
+    return <p>Загрузка...</p>;
   }
 
   return (
     <div
       style={{
         display: "flex",
-        alignItems: "center",
         justifyContent: "center",
       }}
     >
