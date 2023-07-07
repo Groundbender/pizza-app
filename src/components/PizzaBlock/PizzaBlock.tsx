@@ -5,9 +5,25 @@ import { Link } from "react-router-dom";
 
 const typeNames = ["тонкое", "традиционное"];
 
-const PizzaBlock = ({ title, price, imageUrl, sizes, types, id }) => {
-  const [activeType, setActiveType] = useState(0);
-  const [activeSize, setActiveSize] = useState(0);
+interface PizzaBlockProps {
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+  id: string;
+}
+
+const PizzaBlock = ({
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+  id,
+}: PizzaBlockProps) => {
+  const [activeType, setActiveType] = useState<number>(0);
+  const [activeSize, setActiveSize] = useState<number>(0);
   const cartItem = useSelector(selectCartItemById(id));
 
   // const pizzaCount = cartItem ? cartItem.count : 0;

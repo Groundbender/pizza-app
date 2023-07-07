@@ -2,7 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from "../../redux/filterSlice";
 
-export const filtersData = [
+interface FilterOptions {
+  name: string;
+  sortProperty: string;
+}
+
+// type ClickOutside = React.MouseEvent<HTMLBodyElement> & {
+//   path: Node[];
+// };
+
+export const filtersData: FilterOptions[] = [
   {
     name: "популярности (по убыв)",
     sortProperty: "rating",
@@ -32,11 +41,11 @@ export const filtersData = [
 const Sort = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
-  const sort = useSelector((state) => state.filter.sort);
-  const sortRef = useRef();
+  const sort = useSelector((state: any) => state.filter.sort);
+  const sortRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (e) => {
-    if (!sortRef.current || !sortRef.current.contains(e.target)) {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (!sortRef.current || !sortRef.current.contains(e.target as Node)) {
       setIsOpen(false);
     }
   };

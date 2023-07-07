@@ -6,12 +6,17 @@ import { Categories } from "../components/Categories/Categories";
 import { PizzaBlock } from "../components/PizzaBlock/PizzaBlock";
 import { Sort, filtersData } from "../components/Sort/Sort";
 import { Skeleton } from "../components/PizzaBlock/Skeleton";
-import Pagination from "../Pagination/Pagination";
+import Pagination from "../components/Pagination/Pagination";
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentPage, setFilters } from "../redux/filterSlice";
+import {
+  setCategoryId,
+  setCurrentPage,
+  setFilters,
+} from "../redux/filterSlice";
 import { fetchPizzas, selectPizzaData } from "../redux/pizzaSlice";
+
 const Home = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // const [items, setItems] = useState([]);
   // const [isLoading, setIsLoading] = useState(true);
@@ -20,8 +25,17 @@ const Home = () => {
   const isMounted = useRef(false);
 
   const { categoryId, sort, currentPage, searchValue } = useSelector(
-    (state) => state.filter
+    (state: any) => state.filter
   );
+
+  const onChangeCategory = (index: number) => {
+    dispatch(setCategoryId(index));
+  };
+
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
+  };
+
   const { items, status } = useSelector(selectPizzaData);
   const { sortProperty } = sort;
   const dispatch = useDispatch();
@@ -33,6 +47,7 @@ const Home = () => {
 
   const getPizzas = async () => {
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
@@ -80,12 +95,12 @@ const Home = () => {
 
   const skeletons = [...new Array(6)].map((_, i) => <Skeleton key={i} />);
 
-  const pizzas = items.map((obj) => <PizzaBlock {...obj} key={obj.id} />);
+  const pizzas = items.map((obj: any) => <PizzaBlock {...obj} key={obj.id} />);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories />
+        <Categories onChangeCategory={onChangeCategory} />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
@@ -104,10 +119,7 @@ const Home = () => {
           </p>
         </div>
       )}
-      <Pagination
-        currentPage={currentPage}
-        onChangePage={(number) => dispatch(setCurrentPage(number))}
-      />
+      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
 };

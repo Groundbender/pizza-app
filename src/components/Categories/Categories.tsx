@@ -10,8 +10,12 @@ const categoriesData = [
   "Закрытые",
 ];
 
-const Categories = ({ onChangeCategory }) => {
-  const categoryId = useSelector((state) => state.filter.categoryId);
+type CategoriesProps = {
+  onChangeCategory: (index: number) => void;
+};
+
+const Categories = ({ onChangeCategory }: CategoriesProps) => {
+  const categoryId = useSelector((state: any) => state.filter.categoryId);
 
   const dispatch = useDispatch();
 
@@ -21,7 +25,7 @@ const Categories = ({ onChangeCategory }) => {
         {categoriesData.map((title, index) => (
           <li
             key={index}
-            onClick={() => dispatch(setCategoryId(index))}
+            onClick={() => onChangeCategory(index)}
             className={categoryId === index ? "active" : ""}
           >
             {title}

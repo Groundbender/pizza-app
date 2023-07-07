@@ -1,15 +1,33 @@
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, minusItem, removeItem } from "../../redux/cartSlice";
 
-const CartItem = ({ id, title, imageUrl, price, count, type, size }) => {
+interface CartItemProps {
+  id: string;
+  title: string;
+  imageUrl: string;
+  price: number;
+  count: number;
+  type: string;
+  size: number;
+}
+
+const CartItem = ({
+  id,
+  title,
+  imageUrl,
+  price,
+  count,
+  type,
+  size,
+}: CartItemProps) => {
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.cart.items);
+  const items = useSelector((state: any) => state.cart.items);
 
   const onClickPlus = () => {
     dispatch(addItem({ id })); // find(... obj.id === {id})
   };
   const onClickMinus = () => {
-    const foo = items.find((item) => item.id === id);
+    const foo = items.find((item: any) => item.id === id);
     if (foo.count === 1) {
       if (window.confirm("Вы действительно хотите удалить товар?")) {
         dispatch(removeItem(id));
