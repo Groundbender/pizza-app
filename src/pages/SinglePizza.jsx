@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export const SinglePizza = () => {
   const { id } = useParams();
   const [pizza, setPizza] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     (async () => {
       try {
@@ -14,7 +14,8 @@ export const SinglePizza = () => {
         );
         setPizza(data);
       } catch (error) {
-        console.log("Couldn't fetch");
+        alert("Ошибка при получении пиццы");
+        navigate("/");
       }
     })();
   }, [id]);
