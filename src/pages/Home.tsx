@@ -4,19 +4,25 @@ import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { Categories } from "../components/Categories/Categories";
 import { PizzaBlock } from "../components/PizzaBlock/PizzaBlock";
-import { Sort, filtersData } from "../components/Sort/Sort";
+import { SortPopup, filtersData } from "../components/Sort/Sort";
 import { Skeleton } from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination/Pagination";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  FilterSliceState,
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/filterSlice";
-import { fetchPizzas, selectPizzaData } from "../redux/pizzaSlice";
+import {
+  SearchPizzaParams,
+  fetchPizzas,
+  selectPizzaData,
+} from "../redux/pizzaSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Home = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // const [items, setItems] = useState([]);
   // const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +44,7 @@ const Home = () => {
 
   const { items, status } = useSelector(selectPizzaData);
   const { sortProperty } = sort;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const sortBy = sortProperty.replace("-", "");
   const order = sortProperty.includes("-") ? "asc" : "desc";
@@ -47,51 +53,59 @@ const Home = () => {
 
   const getPizzas = async () => {
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
         category,
         search,
-        currentPage,
+        currentPage: String(currentPage),
       })
     );
+    window.scrollTo(0, 0);
   };
 
   // useEffect(() => {
-  //   if (window.location.search) {
-  //     const params = qs.parse(window.location.search.substring(1)); // без ? знака
-
-  //     const sort = filtersData.find(
-  //       (obj) => obj.sortProperty === params.sortProperty
-  //     );
-
-  //     dispatch(setFilters({ ...params, sort }));
-  //     // проверка произошел ли dispatch
-  //     isSearch.current = true;
-  //   }
-  // }, []);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-
-    // if (!isSearch.current) {
-    getPizzas();
-    // }
-    isSearch.current = false;
-  }, [categoryId, sortProperty, currentPage, search]);
-
-  // useEffect(() => {
   //   if (isMounted.current) {
-  //     const queryString = qs.stringify({
-  //       sortProperty: sortProperty,
-  //       categoryId,
+  //     const params = {
+  //       categoryId: categoryId > 0 ? categoryId : null,
+  //       sortProperty: sort.sortProperty,
   //       currentPage,
-  //     });
+  //     };
+  //     const queryString = qs.stringify(params, { skipNulls: true });
   //     navigate(`?${queryString}`);
   //   }
-  //   isMounted.current = true;
-  // }, [categoryId, sortProperty, currentPage]);
+
+  //   if (!window.location.search) {
+  //     dispatch(fetchPizzas({} as SearchPizzaParams));
+  //   }
+  // }, [categoryId, sort.sortProperty, currentPage, searchValue]);
+
+  useEffect(() => {
+    getPizzas();
+  }, [categoryId, sort.sortProperty, currentPage, search]);
+
+  // useEffect(() => {
+  //   if (window.location.search) {
+  //     const params = qs.parse(
+  //       window.location.search.substring(1)
+  //     ) as unknown as SearchPizzaParams; // без ? знака
+
+  //     const sort = filtersData.find(
+  //       (obj) => obj.sortProperty === params.sortBy
+  //     );
+
+  //     dispatch(
+  //       setFilters({
+  //         categoryId: +params.category,
+  //         currentPage: +params.currentPage,
+  //         searchValue: params.search,
+  //         sort: sort ? sort : filtersData[0],
+  //       })
+  //     );
+  //     // проверка произошел ли dispatch
+  //     isMounted.current = true;
+  //   }
+  // }, []);
 
   const skeletons = [...new Array(6)].map((_, i) => <Skeleton key={i} />);
 
@@ -101,7 +115,7 @@ const Home = () => {
     <div className="container">
       <div className="content__top">
         <Categories onChangeCategory={onChangeCategory} />
-        <Sort />
+        <SortPopup />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

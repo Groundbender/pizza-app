@@ -1,5 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, minusItem, removeItem } from "../../redux/cartSlice";
+import {
+  CartItem,
+  addItem,
+  minusItem,
+  removeItem,
+} from "../../redux/cartSlice";
+import { RootState } from "../../redux/store";
 
 interface CartItemProps {
   id: string;
@@ -11,7 +17,7 @@ interface CartItemProps {
   size: number;
 }
 
-const CartItem = ({
+const CartItemBlock = ({
   id,
   title,
   imageUrl,
@@ -21,14 +27,14 @@ const CartItem = ({
   size,
 }: CartItemProps) => {
   const dispatch = useDispatch();
-  const items = useSelector((state: any) => state.cart.items);
+  const items = useSelector((state: RootState) => state.cart.items);
 
   const onClickPlus = () => {
-    dispatch(addItem({ id })); // find(... obj.id === {id})
+    dispatch(addItem({ id } as CartItem)); // find(... obj.id === {id})
   };
   const onClickMinus = () => {
     const foo = items.find((item: any) => item.id === id);
-    if (foo.count === 1) {
+    if (foo?.count === 1) {
       if (window.confirm("Вы действительно хотите удалить товар?")) {
         dispatch(removeItem(id));
       }
@@ -128,4 +134,4 @@ const CartItem = ({
   );
 };
 
-export { CartItem };
+export { CartItemBlock };

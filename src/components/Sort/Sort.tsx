@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSort } from "../../redux/filterSlice";
-
+import { SortPropertyEnum, setSort } from "../../redux/filterSlice";
 interface FilterOptions {
   name: string;
-  sortProperty: string;
+  sortProperty: SortPropertyEnum;
 }
 
 // type ClickOutside = React.MouseEvent<HTMLBodyElement> & {
@@ -14,31 +13,31 @@ interface FilterOptions {
 export const filtersData: FilterOptions[] = [
   {
     name: "популярности (по убыв)",
-    sortProperty: "rating",
+    sortProperty: SortPropertyEnum.RATING_DESC,
   },
   {
     name: "популярности (по возр)",
-    sortProperty: "-rating",
+    sortProperty: SortPropertyEnum.RATING_ASC,
   },
   {
     name: "цене (по убыв)",
-    sortProperty: "price",
+    sortProperty: SortPropertyEnum.PRICE_DESC,
   },
   {
     name: "цене (по возр)",
-    sortProperty: "-price",
+    sortProperty: SortPropertyEnum.PRICE_ASC,
   },
   {
     name: "алфавиту (по убыв)",
-    sortProperty: "title",
+    sortProperty: SortPropertyEnum.TITLE_DESC,
   },
   {
     name: "алфавиту (по возр)",
-    sortProperty: "-title",
+    sortProperty: SortPropertyEnum.TITLE_ASC,
   },
 ];
 
-const Sort = () => {
+const SortPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const sort = useSelector((state: any) => state.filter.sort);
@@ -103,4 +102,4 @@ const Sort = () => {
   );
 };
 
-export { Sort };
+export { SortPopup };
