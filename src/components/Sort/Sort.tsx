@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { SortPropertyEnum, setSort } from "../../redux/filterSlice";
+import { useEffect, useRef, useState, memo } from "react";
+import { useDispatch } from "react-redux";
+import { Sort, SortPropertyEnum, setSort } from "../../redux/filterSlice";
 interface FilterOptions {
   name: string;
   sortProperty: SortPropertyEnum;
@@ -37,10 +37,13 @@ export const filtersData: FilterOptions[] = [
   },
 ];
 
-const SortPopup = () => {
+interface SortPopupProps {
+  sort: Sort;
+}
+
+const SortPopup: React.FC<SortPopupProps> = memo(({ sort }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
-  const sort = useSelector((state: any) => state.filter.sort);
   const sortRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (e: MouseEvent) => {
@@ -100,6 +103,6 @@ const SortPopup = () => {
       )}
     </div>
   );
-};
+});
 
 export { SortPopup };

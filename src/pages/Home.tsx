@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
@@ -34,9 +34,9 @@ const Home = () => {
     (state: any) => state.filter
   );
 
-  const onChangeCategory = (index: number) => {
+  const onChangeCategory = useCallback((index: number) => {
     dispatch(setCategoryId(index));
-  };
+  }, []);
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -115,7 +115,7 @@ const Home = () => {
     <div className="container">
       <div className="content__top">
         <Categories onChangeCategory={onChangeCategory} />
-        <SortPopup />
+        <SortPopup sort={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

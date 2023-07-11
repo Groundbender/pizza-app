@@ -5,6 +5,7 @@ import {
   minusItem,
   removeItem,
 } from "../../redux/cartSlice";
+import clsx from "clsx";
 import { RootState } from "../../redux/store";
 
 interface CartItemProps {
@@ -33,8 +34,8 @@ const CartItemBlock = ({
     dispatch(addItem({ id } as CartItem)); // find(... obj.id === {id})
   };
   const onClickMinus = () => {
-    const foo = items.find((item: any) => item.id === id);
-    if (foo?.count === 1) {
+    const pizza = items.find((item: any) => item.id === id);
+    if (pizza?.count === 1) {
       if (window.confirm("Вы действительно хотите удалить товар?")) {
         dispatch(removeItem(id));
       }
@@ -60,9 +61,15 @@ const CartItemBlock = ({
         </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
+          disabled={count === 1}
           onClick={onClickMinus}
-          className="button button--outline button--circle cart__item-count-minus"
+          className={clsx(
+            "button button--outline button--circle cart__item-count-minus",
+            {
+              "cart__item-count-minus--disabled": count === 1,
+            }
+          )}
         >
           <svg
             width="10"
@@ -80,11 +87,13 @@ const CartItemBlock = ({
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{count}</b>
-        <div
+        <button
           onClick={onClickPlus}
-          className="button button--outline button--circle cart__item-count-plus"
+          className={
+            "button button--outline button--circle cart__item-count-plus"
+          }
         >
           <svg
             width="10"
@@ -102,7 +111,7 @@ const CartItemBlock = ({
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>{price * count}</b>
