@@ -9,17 +9,15 @@ import { Skeleton } from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination/Pagination";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  FilterSliceState,
   setCategoryId,
   setCurrentPage,
   setFilters,
-} from "../redux/filterSlice";
-import {
-  SearchPizzaParams,
-  fetchPizzas,
-  selectPizzaData,
-} from "../redux/pizzaSlice";
+} from "../redux/filter/slice";
+
 import { useAppDispatch } from "../redux/store";
+import { selectPizzaData } from "../redux/pizza/selectors";
+import { fetchPizzas } from "../redux/pizza/asyncActions";
+import { SearchPizzaParams } from "../redux/pizza/types";
 
 const Home = () => {
   const navigate = useNavigate();
