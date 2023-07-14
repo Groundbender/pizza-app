@@ -5,7 +5,7 @@ import { Search } from "../Search/Search";
 import { useSelector } from "react-redux";
 import { selectCart } from "../../redux/cart/selectors";
 
-const Header = () => {
+export const Header = () => {
   const { items, totalPrice } = useSelector(selectCart);
   const location = useLocation();
 
@@ -77,5 +77,3 @@ const Header = () => {
     </div>
   );
 };
-
-export { Header };

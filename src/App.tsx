@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import "./scss/app.scss";
 import { MainLayout } from "./layouts/MainLayout";
 
+// dynamic imports
 const Cart = Loadable({
   loader: () => import(/* webpackChunkName: "Cart" */ "./pages/Cart"),
   loading: () => <div>Идет загрузка корзины....</div>,

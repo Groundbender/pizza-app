@@ -1,15 +1,17 @@
-import { useCallback, useEffect, useRef } from "react";
-import { Categories } from "../components/Categories/Categories";
-import { PizzaBlock } from "../components/PizzaBlock/PizzaBlock";
-import { SortPopup } from "../components/Sort/Sort";
-import { Skeleton } from "../components/PizzaBlock/Skeleton";
-import Pagination from "../components/Pagination/Pagination";
-import { useSelector } from "react-redux";
-import { setCategoryId, setCurrentPage } from "../redux/filter/slice";
-
+import { useCallback, useEffect } from "react";
 import { useAppDispatch } from "../redux/store";
 import { selectPizzaData } from "../redux/pizza/selectors";
+import { useSelector } from "react-redux";
 import { fetchPizzas } from "../redux/pizza/asyncActions";
+import { setCategoryId, setCurrentPage } from "../redux/filter/slice";
+
+import {
+  Categories,
+  PizzaBlock,
+  SortPopup,
+  Pagination,
+  Skeleton,
+} from "../components";
 
 const Home = () => {
   const { categoryId, sort, currentPage, searchValue } = useSelector(

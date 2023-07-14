@@ -15,7 +15,7 @@ interface CartItemProps {
   size: number;
 }
 
-const CartItemBlock = ({
+export const CartItemBlock = ({
   id,
   title,
   imageUrl,
@@ -132,5 +132,3 @@ const CartItemBlock = ({
     </div>
   );
 };
-
-export { CartItemBlock };

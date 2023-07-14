@@ -16,7 +16,7 @@ interface PizzaBlockProps {
   id: string;
 }
 
-const PizzaBlock = ({
+export const PizzaBlock = ({
   title,
   price,
   imageUrl,
@@ -103,5 +103,3 @@ const PizzaBlock = ({
     </div>
   );
 };
-
-export { PizzaBlock };

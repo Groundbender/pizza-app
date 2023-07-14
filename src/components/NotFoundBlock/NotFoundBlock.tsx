@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./NotFoundBlock.module.scss";
 import { useLocation } from "react-router-dom";
-const NotFoundBlock = () => {
+export const NotFoundBlock = () => {
   const location = useLocation();
   return (
     <div className={styles.root}>
@@ -17,5 +17,3 @@ const NotFoundBlock = () => {
     </div>
   );
 };
-
-export { NotFoundBlock };

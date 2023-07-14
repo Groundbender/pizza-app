@@ -8,7 +8,7 @@ interface PaginationProps {
   currentPage: number;
 }
 
-const Pagination = ({ onChangePage, currentPage }: PaginationProps) => {
+export const Pagination = ({ onChangePage, currentPage }: PaginationProps) => {
   return (
     <ReactPaginate
       className={styles.root}
@@ -23,5 +23,3 @@ const Pagination = ({ onChangePage, currentPage }: PaginationProps) => {
     />
   );
 };
-
-export default Pagination;
