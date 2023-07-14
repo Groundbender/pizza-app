@@ -31,14 +31,7 @@ const CartItemBlock = ({
     dispatch(addItem({ id } as CartItem)); // find(... obj.id === {id})
   };
   const onClickMinus = () => {
-    const pizza = items.find((item: any) => item.id === id);
-    if (pizza?.count === 1) {
-      if (window.confirm("Вы действительно хотите удалить товар?")) {
-        dispatch(removeItem(id));
-      }
-    } else {
-      dispatch(minusItem(id));
-    }
+    dispatch(minusItem(id));
   };
   const onClickRemove = () => {
     if (window.confirm("Вы действительно хотите удалить товар?")) {

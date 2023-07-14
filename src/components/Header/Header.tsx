@@ -11,10 +11,7 @@ const Header = () => {
 
   const isMounted = useRef(false);
 
-  const cartTotalCount = items.reduce(
-    (sum: number, pizza: any) => sum + pizza.count,
-    0
-  );
+  const cartTotalCount = items.reduce((sum, pizza) => sum + pizza.count, 0);
 
   useEffect(() => {
     if (isMounted.current) {

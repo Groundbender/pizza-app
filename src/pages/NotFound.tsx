@@ -4,4 +4,4 @@ const NotFound = () => {
   return <NotFoundBlock />;
 };
 
-export { NotFound };
+export default NotFound;

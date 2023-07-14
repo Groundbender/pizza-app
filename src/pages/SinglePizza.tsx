@@ -8,7 +8,7 @@ interface SinglePizzaData {
   price: number;
 }
 
-export const SinglePizza: React.FC = () => {
+const SinglePizza: React.FC = () => {
   const { id } = useParams();
   const [pizza, setPizza] = useState<SinglePizzaData | null>(null);
 
@@ -43,3 +43,5 @@ export const SinglePizza: React.FC = () => {
     </div>
   );
 };
+
+export default SinglePizza;

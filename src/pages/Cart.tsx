@@ -9,10 +9,7 @@ const Cart = () => {
   const { totalPrice, items } = useSelector(selectCart);
   const dispatch = useDispatch();
 
-  const cartTotalCount = items.reduce(
-    (sum: number, pizza: any) => sum + pizza.count,
-    0
-  );
+  const cartTotalCount = items.reduce((sum, pizza) => sum + pizza.count, 0);
 
   const clearCart = () => {
     if (window.confirm("Ты действительно хочешь очистить корзину?")) {
@@ -101,7 +98,7 @@ const Cart = () => {
         </div>
       </div>
       <div className="content__items">
-        {items.map((obj: any) => (
+        {items.map((obj) => (
           <CartItemBlock key={obj.id} {...obj} />
         ))}
       </div>
@@ -148,4 +145,4 @@ const Cart = () => {
   );
 };
 
-export { Cart };
+export default Cart;

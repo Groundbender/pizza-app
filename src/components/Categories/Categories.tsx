@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 const categoriesData = [
   "Все",
   "Мясные",
@@ -14,7 +15,7 @@ type CategoriesProps = {
 };
 
 const Categories = React.memo(({ onChangeCategory }: CategoriesProps) => {
-  const categoryId = useSelector((state: any) => state.filter.categoryId);
+  const categoryId = useSelector((state: RootState) => state.filter.categoryId);
 
   return (
     <div className="categories">
