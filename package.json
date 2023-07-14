@@ -12,6 +12,7 @@
     "@types/node": "^20.4.0",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "@types/react-loadable": "^5.5.7",
     "ahooks": "^3.7.8",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
